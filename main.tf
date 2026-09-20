@@ -1,4 +1,4 @@
-# resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
+resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 #   vm_id     = 100         # Sztywne ID maszyny (musi być wolne w Proxmoxie)
 #   node_name = "pve"       # Nazwa Twojego węzła Proxmox
 #   name      = "ubuntu-vm" # Nazwa hosta nowej maszyny
