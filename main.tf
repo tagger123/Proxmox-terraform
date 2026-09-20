@@ -7,5 +7,4 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   memory {
     dedicated = 2048
   }
-  # Przykładowa konfiguracja dysku, sieci itp.
 }
