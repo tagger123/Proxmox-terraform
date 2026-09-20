@@ -1,0 +1,38 @@
+name: 'Terraform Proxmox CI/CD'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  terraform:
+    name: 'Terraform Deploy'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      run: terraform plan
+      env:
+        TF_VAR_proxmox_api_url: ${{ secrets.PROXMOX_API_URL }}
+        TF_VAR_proxmox_api_token: ${{ secrets.PROXMOX_API_TOKEN }}
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve
+      env:
+        TF_VAR_proxmox_api_url: ${{ secrets.PROXMOX_API_URL }}
+        TF_VAR_proxmox_api_token: ${{ secrets.PROXMOX_API_TOKEN }}
