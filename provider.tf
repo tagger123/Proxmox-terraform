@@ -3,14 +3,24 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "~> 0.68.0" # Dostosuj do aktualnej wersji
+      version = ">= 0.50.0"
     }
   }
 }
 
+variable "proxmox_api_url" {
+  type        = string
+  description = "Adres URL API Proxmoxa"
+}
+
+variable "proxmox_api_token" {
+  type        = string
+  sensitive   = true
+  description = "Token API Proxmoxa w formacie user@realm!token=uuid"
+}
+
 provider "proxmox" {
-  endpoint = var.proxmox_api_url
+  endpoint  = var.proxmox_api_url
   api_token = var.proxmox_api_token
-  # Jeśli używasz self-signed certyfikatu w homelabie:
-  insecure = true
+  insecure  = true # Pomija błędy samo-podpisanych certyfikatów SSL
 }
