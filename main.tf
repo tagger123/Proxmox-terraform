@@ -34,8 +34,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     }
 
     user_account {
-      username = "admin"
-      keys = [file(pathexpand("~/.ssh/id_rsa.pub"))]
+        username = "admin"
+        keys     = [file(pathexpand("~/.ssh/id_ed25519.pub"))]
     }
   }
 
