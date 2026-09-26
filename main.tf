@@ -8,8 +8,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   }
 
   cpu {
-    cores = 4
-    type = "host"
+    cores   = 2
+    sockets = 2
+    type    = "host"
   }
 
   memory {
