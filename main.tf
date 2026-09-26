@@ -1,17 +1,45 @@
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   node_name = "pve-01" # Nazwa Twojego noda w Proxmoxie
-  name      = "terraform-test-vm-01"
-  cpu {
-    cores = 4
+  name      = "Rocky-test-vm-01"
+
+  clone {
+    vm_id = 9000
+    full  = true
   }
+
+  cpu {
+    cores = 2
+  }
+
   memory {
     dedicated = 2048
   }
-  name      = "terraform-test-vm-02"
-  cpu {
-    cores = 4
+
+  disk {
+    datastore_id = "local-lvm"
+    interface    = "scsi0"
+    size         = 20
   }
-  memory {
-    dedicated = 2048
+
+  network_device {
+    bridge = "vmbr0"
+  }
+
+  initialization {
+    ip_config {
+      ipv4 {
+        address = "192.168.1.50/24"
+        gateway = "192.168.1.1"
+      }
+    }
+
+    user_account {
+      username = "admin"
+      keys     = [file("~/.ssh/id_ed25519.pub")]
+    }
+  }
+
+  agent {
+    enabled = true
   }
 }
