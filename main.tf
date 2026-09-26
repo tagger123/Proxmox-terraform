@@ -22,7 +22,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   }
 
   network_device {
-    bridge = "vmbr0"
+    bridge = "vmbr1"
   }
 
   initialization {
