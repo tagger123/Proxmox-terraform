@@ -7,4 +7,11 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   memory {
     dedicated = 2048
   }
+  name      = "terraform-test-vm-02"
+  cpu {
+    cores = 4
+  }
+  memory {
+    dedicated = 2048
+  }
 }
