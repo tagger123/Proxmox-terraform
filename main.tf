@@ -9,18 +9,18 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   cpu {
     cores   = 2
-    sockets = 2
+    sockets = 4
     type    = "host"
   }
 
   memory {
-    dedicated = 4096
+    dedicated = 8192
   }
 
   disk {
     datastore_id = "local-lvm"
     interface    = "scsi0"
-    size         = 20
+    size         = 40
   }
 
   network_device {
@@ -30,8 +30,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   initialization {
     ip_config {
       ipv4 {
-        address = "192.168.1.50/24"
-        gateway = "192.168.1.1"
+        address = "10.10.50.220/24"
+        gateway = "10.10.50.1"
       }
     }
 
