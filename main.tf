@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
-  node_name = "pve-02" # Nazwa Twojego noda w Proxmoxie
-  name      = "terraform-test-vm"
+  node_name = "pve-01" # Nazwa Twojego noda w Proxmoxie
+  name      = "terraform-test-vm-01"
   cpu {
     cores = 4
   }
