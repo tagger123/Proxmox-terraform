@@ -24,14 +24,14 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   }
 
   network_device {
-    bridge = "vmbr1"
+    bridge = "vmbr0"
   }
 
   initialization {
     ip_config {
       ipv4 {
-        address = "10.10.50.220/24"
-        gateway = "10.10.50.1"
+        address = "192.168.8.222/24"
+        gateway = "192.168.8.1"
       }
     }
 
