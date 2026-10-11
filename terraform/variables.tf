@@ -74,7 +74,7 @@ variable "vms" {
     vmid    = number
     role    = string
     ip      = string
-    sockets = optional(1,number)
+    sockets = optional(number, 1)
     cores   = number
     memory  = number
     disk    = number
