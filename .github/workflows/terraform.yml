@@ -1,35 +1,41 @@
-name: "Terraform Proxmox Deployment"
-
+name: terraform
 on:
-  push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+    paths: ["terraform/**"]
+  push:
+    branches: [main]
+    paths: ["terraform/**"]
+
+concurrency:
+  group: terraform
+  cancel-in-progress: false
+
+env:
+  TF_IN_AUTOMATION: "1"
+  TF_VAR_proxmox_api_url: ${{ secrets.PROXMOX_API_URL }}
+  TF_VAR_proxmox_api_token: ${{ secrets.PROXMOX_API_TOKEN }}
+  TF_STATE_PATH: /var/lib/homelab-tfstate/terraform.tfstate
 
 jobs:
-  terraform:
-    runs-on: self-hosted
-    
-    # Globalne zmienne dla całego joba – dzięki temu provider je widzi
-    env:
-      TF_VAR_proxmox_api_url: ${{ secrets.PROXMOX_API_URL }}
-      TF_VAR_proxmox_api_token: ${{ secrets.PROXMOX_API_TOKEN }}
-
+  plan:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, linux]
+    defaults:
+      run:
+        working-directory: terraform
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - run: terraform init -input=false -backend-config="path=${TF_STATE_PATH}"
+      - run: terraform validate
+      - run: terraform plan -input=false
 
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Validate
-        run: terraform validate
-
-      - name: Terraform Plan
-        run: terraform plan
-
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve
+  apply:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux]
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v4
+      - run: terraform init -input=false -backend-config="path=${TF_STATE_PATH}"
+      - run: terraform apply -input=false -auto-approve
