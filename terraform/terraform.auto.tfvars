@@ -4,24 +4,22 @@ extra_ssh_keys = [
 
 vms = {
   lnx-core = {
-    vmid = 201, 
-    role = "core", 
+    vmid = 201
+    role = "core"
     ip = "192.168.8.211"
-
-    sockets = 2,
-    cores = 2,
-    memory = 2048, 
+    sockets = 2
+    cores = 2
+    memory = 2048
     disk = 20
   }
 
   lnx-mon = {
-    vmid = 202, 
-    role = "monitoring", 
+    vmid = 202
+    role = "monitoring" 
     ip = "192.168.8.212"
-    
-    sockets = 2,
-    cores = 2, 
-    memory = 2048, 
+    sockets = 2
+    cores = 2
+    memory = 2048
     disk = 30
   }
 }

@@ -29,8 +29,9 @@ resource "proxmox_virtual_environment_vm" "rocky" {
   }
 
   cpu {
-    cores = each.value.cores
-    type  = "host"
+    sockets = each.value.sockets
+    cores   = each.value.cores
+    type    = "host"
   }
 
   memory {
