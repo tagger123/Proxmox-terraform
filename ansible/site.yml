@@ -21,10 +21,11 @@
         name: chronyd
         state: started
         enabled: true
+
     - name: Dodaj Hello World dla usera admin
       ansible.builtin.copy:
         dest: /home/Admin/helloworld.txt
         content: "hello world\n"
-        owner: Admin
-        group: Admin
+        owner: admin
+        group: admin
         mode: '0644'
