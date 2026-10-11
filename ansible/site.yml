@@ -24,7 +24,7 @@
 
     - name: Dodaj Hello World dla usera admin
       ansible.builtin.copy:
-        dest: /home/Admin/helloworld.txt
+        dest: /home/admin/helloworld.txt
         content: "hello world\n"
         owner: admin
         group: admin
