@@ -6,8 +6,8 @@ vms = {
   lnx-core = {
     vmid = 201, 
     role = "core", 
-    ip = "192.168.8.211"
-
+    ip = "192.168.8.211",
+    sockets = 2,
     cores = 2,
     memory = 2048, 
     disk = 20
@@ -16,8 +16,9 @@ vms = {
   lnx-mon = {
     vmid = 202, 
     role = "monitoring", 
-    ip = "192.168.8.212"
-    cores = 8, 
+    ip = "192.168.8.212",
+    sockets = 2,
+    cores = 2, 
     memory = 2048, 
     disk = 30
   }
