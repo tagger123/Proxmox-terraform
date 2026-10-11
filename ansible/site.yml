@@ -13,7 +13,7 @@
 
     - name: Zainstaluj pakiety
       ansible.builtin.dnf:
-        name: [chrony, vim-enhanced, git, curl, tar, bash-completion]
+        name: [chrony, vim-enhanced, git, curl, tar, bash-completion, nano]
         state: present
 
     - name: Włącz chronyd
