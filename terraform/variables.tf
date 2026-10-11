@@ -68,32 +68,15 @@ variable "extra_ssh_keys" {
   default     = []
 }
 
-variable "vm_name" {
-  type    = string
-  default = "rk-core"
-}
-
-variable "vm_id" {
-  type    = number
-  default = 201
-}
-
-variable "vm_ip" {
-  type    = string
-  default = "192.168.8.211"
-}
-
-variable "cores" {
-  type    = number
-  default = 2
-}
-
-variable "memory" {
-  type    = number
-  default = 2048
-}
-
-variable "disk" {
-  type    = number
-  default = 20
+variable "vms" {
+  description = "Mapa maszyn. Klucz = nazwa VM, role = grupa w Ansible."
+  type = map(object({
+    vmid    = number
+    role    = string
+    ip      = string
+    cores   = number
+    memory  = number
+    disk    = number
+    enabled = optional(bool, true)
+  }))
 }

@@ -1,12 +1,21 @@
 locals {
-  ssh_key = trimspace(file(pathexpand(var.ssh_public_key_path)))
+  active_vms = { for name, vm in var.vms : name => vm if vm.enabled }
+  ssh_keys   = concat([trimspace(file(pathexpand(var.ssh_public_key_path)))], var.extra_ssh_keys)
+}
+
+# Dotychczasowa VM (rk-core -> lnx-core) trafia do mapy bez niszczenia.
+moved {
+  from = proxmox_virtual_environment_vm.rocky
+  to   = proxmox_virtual_environment_vm.rocky["lnx-core"]
 }
 
 resource "proxmox_virtual_environment_vm" "rocky" {
-  name      = var.vm_name
+  for_each = local.active_vms
+
+  name      = each.key
   node_name = var.pve_node
-  vm_id     = var.vm_id
-  tags      = ["terraform", "rocky"]
+  vm_id     = each.value.vmid
+  tags      = sort(["terraform", "rocky", each.value.role])
   on_boot   = true
 
   clone {
@@ -20,18 +29,18 @@ resource "proxmox_virtual_environment_vm" "rocky" {
   }
 
   cpu {
-    cores = var.cores
+    cores = each.value.cores
     type  = "host"
   }
 
   memory {
-    dedicated = var.memory
+    dedicated = each.value.memory
   }
 
   disk {
     datastore_id = var.datastore
     interface    = "scsi0"
-    size         = var.disk
+    size         = each.value.disk
     discard      = "on"
     ssd          = true
     iothread     = true
@@ -56,14 +65,14 @@ resource "proxmox_virtual_environment_vm" "rocky" {
 
     ip_config {
       ipv4 {
-        address = "${var.vm_ip}/${var.prefix_length}"
+        address = "${each.value.ip}/${var.prefix_length}"
         gateway = var.gateway
       }
     }
 
     user_account {
       username = var.admin_user
-      keys     = concat([local.ssh_key], var.extra_ssh_keys)
+      keys     = local.ssh_keys
     }
   }
 

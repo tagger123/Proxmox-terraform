@@ -1,7 +1,4 @@
-output "vm_ip" {
-  value = var.vm_ip
-}
-
-output "vm_id" {
-  value = proxmox_virtual_environment_vm.rocky.vm_id
+output "vms" {
+  description = "Aktywne maszyny: nazwa => IP"
+  value       = { for name, vm in local.active_vms : name => vm.ip }
 }
