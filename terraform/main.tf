@@ -21,7 +21,7 @@ resource "proxmox_virtual_environment_vm" "rocky" {
 
   cpu {
     cores = var.cores
-    type  = "host" # Rocky 10 wymaga x86-64-v3
+    type  = "host"
   }
 
   memory {
@@ -63,7 +63,7 @@ resource "proxmox_virtual_environment_vm" "rocky" {
 
     user_account {
       username = var.admin_user
-      keys     = [local.ssh_key]
+      keys     = concat([local.ssh_key], var.extra_ssh_keys)
     }
   }
 

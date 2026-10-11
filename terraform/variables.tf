@@ -62,6 +62,12 @@ variable "ssh_public_key_path" {
   default = "~/.ssh/id_ed25519.pub"
 }
 
+variable "extra_ssh_keys" {
+  description = "Dodatkowe klucze publiczne SSH (np. z laptopa)"
+  type        = list(string)
+  default     = []
+}
+
 variable "vm_name" {
   type    = string
   default = "rk-core"
