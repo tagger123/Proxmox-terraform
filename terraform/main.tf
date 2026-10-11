@@ -2,8 +2,6 @@ locals {
   active_vms = { for name, vm in var.vms : name => vm if vm.enabled }
   ssh_keys   = concat([trimspace(file(pathexpand(var.ssh_public_key_path)))], var.extra_ssh_keys)
 }
-
-# Dotychczasowa VM (rk-core -> lnx-core) trafia do mapy bez niszczenia.
 moved {
   from = proxmox_virtual_environment_vm.rocky
   to   = proxmox_virtual_environment_vm.rocky["lnx-core"]

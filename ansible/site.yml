@@ -1,0 +1,23 @@
+---
+- name: Baza dla wszystkich maszyn
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Ustaw hostname
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Ustaw strefę czasu
+      community.general.timezone:
+        name: Europe/Warsaw
+
+    - name: Zainstaluj pakiety
+      ansible.builtin.dnf:
+        name: [chrony, vim-enhanced, git, curl, tar, bash-completion]
+        state: present
+
+    - name: Włącz chronyd
+      ansible.builtin.service:
+        name: chronyd
+        state: started
+        enabled: true
