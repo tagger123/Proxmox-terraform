@@ -22,14 +22,4 @@ vms = {
     memory = 2048
     disk = 30
   }
-
-  pitus = {
-    vmid = 203
-    role = "piesek"
-    ip = "192.168.8.213"
-    sockets = 1
-    cores = 2
-    memory = 2048
-    disk = 20
-  }
 }
