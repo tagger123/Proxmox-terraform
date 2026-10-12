@@ -7,10 +7,6 @@
       ansible.builtin.hostname:
         name: "{{ inventory_hostname }}"
 
-    - name: Ustaw strefę czasu
-      community.general.timezone:
-        name: Europe/Warsaw
-
     - name: Zainstaluj pakiety
       ansible.builtin.dnf:
         name: [chrony, vim-enhanced, git, curl, tar, bash-completion, nano]
