@@ -1,0 +1,43 @@
+- name: Zainstaluj firewalld
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
+
+- name: Uruchom firewalld
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Zezwól na SSH w firewalld
+  ansible.posix.firewalld:
+    service: ssh
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: SELinux w trybie enforcing
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing
+
+- name: Hardening sshd (drop-in)
+  ansible.builtin.copy:
+    dest: /etc/ssh/sshd_config.d/00-hardening.conf
+    owner: root
+    group: root
+    mode: "0600"
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PubkeyAuthentication yes
+      X11Forwarding no
+      MaxAuthTries 4
+    register: sshd_dropin
+
+- name: Sprawdź konfigurację sshd przed restartem
+  ansible.builtin.command: /usr/sbin/sshd -t
+  changed_when: false
+  when: sshd_dropin is changed
+  notify: Restart sshd

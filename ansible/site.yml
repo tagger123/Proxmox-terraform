@@ -1,27 +1,8 @@
----
 - name: Baza dla wszystkich maszyn
   hosts: all
   gather_facts: true
-  tasks:
-    - name: Ustaw hostname
-      ansible.builtin.hostname:
-        name: "{{ inventory_hostname }}"
-
-    - name: Zainstaluj pakiety
-      ansible.builtin.dnf:
-        name: [chrony, vim-enhanced, git, curl, tar, bash-completion, nano]
-        state: present
-
-    - name: Włącz chronyd
-      ansible.builtin.service:
-        name: chronyd
-        state: started
-        enabled: true
-
-    - name: Dodaj Hello World dla usera admin
-      ansible.builtin.copy:
-        dest: /home/admin/helloworld.txt
-        content: "hello world\n"
-        owner: admin
-        group: admin
-        mode: '0644'
+  roles:
+    - role: common
+      tags: [common]
+    - role: hardening
+      tags: [hardening]
