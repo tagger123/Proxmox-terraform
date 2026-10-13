@@ -36,8 +36,3 @@
       MaxAuthTries 4
     register: sshd_dropin
 
-- name: Sprawdź konfigurację sshd przed restartem
-  ansible.builtin.command: /usr/sbin/sshd -t
-  changed_when: false
-  when: sshd_dropin is changed
-  notify: Restart sshd
