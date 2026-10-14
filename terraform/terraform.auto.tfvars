@@ -23,13 +23,4 @@ vms = {
     disk = 30
   }
 
-  lnx-test = {
-    vmid = 203
-    role = "test"
-    ip = "192.168.8.244"
-    sockets = 1
-    cores = 2
-    memory = 1024
-    disk = 10
-  }
 }
