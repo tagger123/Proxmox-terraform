@@ -34,4 +34,4 @@
       PubkeyAuthentication yes
       X11Forwarding no
       MaxAuthTries 4
-    register: sshd_dropin
+  register: sshd_dropin

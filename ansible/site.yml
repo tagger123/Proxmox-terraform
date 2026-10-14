@@ -4,5 +4,5 @@
   roles:
     - role: common
       tags: [common]
-#    - role: hardening
-#      tags: [hardening]
+    - role: hardening
+      tags: [hardening]
