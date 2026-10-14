@@ -28,7 +28,7 @@ vms = {
     role = "test"
     ip = "192.168.8.244"
     sockets = 1
-    core = 2
+    cores = 2
     memory = 1024
     disk = 10
   }
