@@ -35,4 +35,3 @@
       X11Forwarding no
       MaxAuthTries 4
     register: sshd_dropin
-
